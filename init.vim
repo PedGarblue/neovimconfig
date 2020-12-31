@@ -2,6 +2,7 @@ call plug#begin()
 Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'xuyuanp/nerdtree-git-plugin'
 Plug 'dense-analysis/ale'
 Plug 'joshdick/onedark.vim'
@@ -9,6 +10,16 @@ Plug 'digitaltoad/vim-pug'
 call plug#end()
 
 " GUI {{{
+
+if (empty($TMUX))
+  if (has("nvim"))
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
 syntax on
 colorscheme onedark
 set number
@@ -24,7 +35,18 @@ set fileformat=unix
 " }}} TABS
 
 " Airline {{{
-let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled=1
+let g:airline_theme='onedark'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+" Use Alt keys to move between buffers
+" Next buffer
+map <M-k> :bn <CR>
+" Previous buffer
+map <M-j> :bp <CR>
+" Delete buffer
+map <M-d> :bd <CR>
+
 " }}} Airline
 
 " ALE {{{
@@ -46,8 +68,13 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-" }}}
 
+" TextEdit might fail if hidden is not set.
+set hidden
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+" }}}
+  
 " NERDTree {{{
 map <F2> :NERDTreeToggle<CR>
 autocmd vimenter * NERDTree
