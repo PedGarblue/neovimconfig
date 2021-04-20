@@ -31,4 +31,4 @@ set hidden              " TextEdit might fail if hidden is not set.
 set shortmess+=c        " Don't pass messages to |ins-completion-menu|.
 set nobackup            " Coc recommends this
 set nowritebackup       " Coc recommends this
-set updatetime=300      " for better experience
+set updatetime=100      " for better experience
