@@ -9,7 +9,6 @@ require("telescope").setup {
             "--column",
             "--smart-case"
         },
-        prompt_position = "bottom",
         prompt_prefix = " ",
         selection_caret = " ",
         entry_prefix = "  ",
@@ -17,24 +16,23 @@ require("telescope").setup {
         selection_strategy = "reset",
         sorting_strategy = "descending",
         layout_strategy = "horizontal",
-        layout_defaults = {
-            horizontal = {
-                mirror = false,
-                preview_width = 0.5
-            },
-            vertical = {
-                mirror = false
-            }
+        layout_config = {
+          width = 0.75,
+          prompt_position = "bottom",
+          preview_cutoff = 120,
+          horizontal = {
+            mirror = false,
+            preview_width = 0.5,
+          },
+          vertical = {
+            mirror = false,
+          },
         },
         file_sorter = require "telescope.sorters".get_fuzzy_file,
         file_ignore_patterns = {},
         generic_sorter = require "telescope.sorters".get_generic_fuzzy_sorter,
-        shorten_path = true,
+        path_display = { "tail" },
         winblend = 0,
-        width = 0.75,
-        preview_cutoff = 120,
-        results_height = 1,
-        results_width = 0.8,
         border = {},
         borderchars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
         color_devicons = true,
@@ -66,6 +64,13 @@ vim.api.nvim_set_keymap(
     "n",
     "<Leader>fp",
     [[<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>]],
+    opt
+)
+-- git status
+vim.api.nvim_set_keymap(
+    "n",
+    "<Leader>fdf",
+    [[<Cmd>lua require('telescope.builtin').git_status()<CR>]],
     opt
 )
 
